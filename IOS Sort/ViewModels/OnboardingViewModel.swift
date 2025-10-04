@@ -161,12 +161,10 @@ class OnboardingViewModel: ObservableObject {
             return canProceedFromPhone()
         case .otpVerification:
             return otpCode.count == 4
-        case .interests:
-            return canProceedFromInterests()
-        case .decision:
-            return true // Always can proceed from decision
         case .profile:
             return canProceedFromProfile()
+        case .decision:
+            return true // Always can proceed from decision
         case .completed:
             return true
         }

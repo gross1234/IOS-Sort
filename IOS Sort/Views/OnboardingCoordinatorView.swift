@@ -58,8 +58,8 @@ struct OnboardingFlowView: View {
                         removal: .move(edge: .leading)
                     ))
                 
-            case .interests:
-                InterestSelectionView(viewModel: viewModel)
+            case .profile:
+                ProfileSetupView(viewModel: viewModel)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing),
                         removal: .move(edge: .leading)
@@ -67,13 +67,6 @@ struct OnboardingFlowView: View {
                 
             case .decision:
                 DecisionView(viewModel: viewModel)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
-                
-            case .profile:
-                ProfileSetupView(viewModel: viewModel)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing),
                         removal: .move(edge: .leading)

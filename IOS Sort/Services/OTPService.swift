@@ -14,22 +14,37 @@ class OTPService: ObservableObject {
     @Published var phoneNumber: String = ""
     @Published var isOTPValid: Bool = false
     @Published var attemptsRemaining: Int = 3
+    @Published var lastMessageSID: String = ""
     
     private var otpExpirationTime: Date?
     private let otpValidityMinutes: TimeInterval = 5 // OTP valid for 5 minutes
+    private let twilioService = TwilioService.shared
     
     private init() {}
     
     // MARK: - OTP Generation
     
-    func generateOTP(for phoneNumber: String) -> String {
+    func generateOTP(for phoneNumber: String) async -> String {
         self.phoneNumber = phoneNumber
         self.currentOTP = generateRandomOTP()
         self.otpExpirationTime = Date().addingTimeInterval(otpValidityMinutes * 60)
         self.isOTPValid = false
         self.attemptsRemaining = 3
         
-        print("🔐 Generated OTP for \(phoneNumber): \(currentOTP)")
+        // Send OTP via Twilio if configured, otherwise use demo mode
+        if twilioService.validateConfiguration() {
+            do {
+                let messageSID = try await twilioService.sendOTP(to: phoneNumber, otpCode: currentOTP)
+                self.lastMessageSID = messageSID
+                print("📱 OTP sent via Twilio to \(phoneNumber): \(currentOTP) (SID: \(messageSID))")
+            } catch {
+                print("❌ Failed to send OTP via Twilio: \(error.localizedDescription)")
+                print("📱 Demo OTP for \(phoneNumber): \(currentOTP)")
+            }
+        } else {
+            print("📱 Demo OTP for \(phoneNumber): \(currentOTP)")
+        }
+        
         return currentOTP
     }
     
@@ -69,11 +84,11 @@ class OTPService: ObservableObject {
     
     // MARK: - OTP Management
     
-    func resendOTP() -> String {
+    func resendOTP() async -> String {
         guard !phoneNumber.isEmpty else {
             return ""
         }
-        return generateOTP(for: phoneNumber)
+        return await generateOTP(for: phoneNumber)
     }
     
     func clearOTP() {

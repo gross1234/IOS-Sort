@@ -172,7 +172,9 @@ struct OTPVerificationView: View {
                     
                     if viewModel.canResendOTP {
                         Button("Resend Code") {
-                            viewModel.resendOTP()
+                            Task {
+                                await viewModel.resendOTP()
+                            }
                         }
                         .font(.system(size: 14))
                         .foregroundColor(.blue)

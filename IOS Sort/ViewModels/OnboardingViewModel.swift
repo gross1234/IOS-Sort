@@ -115,7 +115,7 @@ class OnboardingViewModel: ObservableObject {
         try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
         
         // Generate real OTP
-        let generatedOTP = otpService.generateOTP(for: validationResult.cleanedNumber)
+        let generatedOTP = await otpService.generateOTP(for: validationResult.cleanedNumber)
         
         isLoading = false
         
@@ -151,8 +151,8 @@ class OnboardingViewModel: ObservableObject {
         }
     }
     
-    func resendOTP() {
-        let newOTP = otpService.resendOTP()
+    func resendOTP() async {
+        let newOTP = await otpService.resendOTP()
         otpCode = ""
         otpTimer = 60
         canResendOTP = false

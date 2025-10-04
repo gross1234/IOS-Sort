@@ -145,6 +145,11 @@ struct TimeRangeSlider: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let boundsWidth = bounds.upperBound - bounds.lowerBound
+            let rangeWidth = range.upperBound - range.lowerBound
+            let lowerOffset = (range.lowerBound - bounds.lowerBound) * geometry.size.width / boundsWidth
+            let rangeWidthPixels = rangeWidth * geometry.size.width / boundsWidth
+            
             ZStack(alignment: .leading) {
                 // Track
                 Rectangle()
@@ -157,8 +162,8 @@ struct TimeRangeSlider: View {
                     .fill(Color.blue)
                     .frame(height: 4)
                     .cornerRadius(2)
-                    .offset(x: (range.lowerBound - bounds.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound))
-                    .frame(width: (range.upperBound - range.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound))
+                    .offset(x: lowerOffset)
+                    .frame(width: rangeWidthPixels)
                 
                 // Lower thumb
                 Circle()
@@ -168,11 +173,11 @@ struct TimeRangeSlider: View {
                         Circle()
                             .stroke(Color.blue, lineWidth: 2)
                     )
-                    .offset(x: (range.lowerBound - bounds.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound) - 10)
+                    .offset(x: lowerOffset - 10)
                     .gesture(
                         DragGesture()
                             .onChanged { value in
-                                let newValue = bounds.lowerBound + (value.location.x / geometry.size.width) * (bounds.upperBound - bounds.lowerBound)
+                                let newValue = bounds.lowerBound + (value.location.x / geometry.size.width) * boundsWidth
                                 let clampedValue = max(bounds.lowerBound, min(newValue, range.upperBound - step))
                                 range = clampedValue...range.upperBound
                             }
@@ -186,11 +191,11 @@ struct TimeRangeSlider: View {
                         Circle()
                             .stroke(Color.blue, lineWidth: 2)
                     )
-                    .offset(x: (range.upperBound - bounds.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound) - 10)
+                    .offset(x: lowerOffset + rangeWidthPixels - 10)
                     .gesture(
                         DragGesture()
                             .onChanged { value in
-                                let newValue = bounds.lowerBound + (value.location.x / geometry.size.width) * (bounds.upperBound - bounds.lowerBound)
+                                let newValue = bounds.lowerBound + (value.location.x / geometry.size.width) * boundsWidth
                                 let clampedValue = min(bounds.upperBound, max(newValue, range.lowerBound + step))
                                 range = range.lowerBound...clampedValue
                             }

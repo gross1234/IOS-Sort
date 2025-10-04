@@ -8,45 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var hasFollowedOrganizations = false // This would come from UserDefaults or API
+    
     var body: some View {
-        NavigationView {
-            VStack(spacing: 40) {
-                Spacer()
-                
-                // Welcome content
-                VStack(spacing: 20) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 80))
-                        .foregroundColor(.green)
-                    
-                    Text("Welcome to Sort!")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    Text("You're all set up and ready to discover amazing events!")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
-                }
-                
-                Spacer()
-                
-                // Debug reset button (remove in production)
-                Button("Reset Onboarding") {
-                    UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
-                    // Force app restart by exiting
-                    exit(0)
-                }
-                .padding()
-                .background(Color.red.opacity(0.1))
-                .cornerRadius(8)
-                .foregroundColor(.red)
-                .padding(.bottom, 40)
+        Group {
+            if hasFollowedOrganizations {
+                MainAppView()
+            } else {
+                ExploreNewOrganizationsView()
             }
-            .navigationTitle("Sort")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear {
+            // Check if user has followed organizations
+            // This would typically come from UserDefaults or API call
+            checkUserOrganizations()
+        }
+    }
+    
+    private func checkUserOrganizations() {
+        // Simulate checking if user has followed organizations
+        // In a real app, this would check UserDefaults or make an API call
+        hasFollowedOrganizations = UserDefaults.standard.bool(forKey: "hasFollowedOrganizations")
     }
 }
 

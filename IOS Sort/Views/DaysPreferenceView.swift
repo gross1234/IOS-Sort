@@ -9,15 +9,20 @@ import SwiftUI
 
 struct DaysPreferenceView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var dayPreferences: [String: Double] = [
-        "Mondays": -7,
-        "Tuesday": -7,
-        "Wednesday": -7,
-        "Thursday": -7,
-        "Fridays": -7,
-        "Saturdays": -7,
-        "Sundays": -7
-    ]
+    @State private var dayPreferences: [String: Double] = [:]
+    
+    init(viewModel: OnboardingViewModel) {
+        self.viewModel = viewModel
+        self._dayPreferences = State(initialValue: [
+            "Mondays": -7,
+            "Tuesday": -7,
+            "Wednesday": -7,
+            "Thursday": -7,
+            "Fridays": -7,
+            "Saturdays": -7,
+            "Sundays": -7
+        ])
+    }
     
     var body: some View {
         VStack(spacing: 0) {

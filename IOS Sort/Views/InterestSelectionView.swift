@@ -67,22 +67,10 @@ struct InterestSelectionView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
-                        .background(Color.gray.opacity(0.8))
+                        .background(viewModel.canProceedFromInterests() ? Color.blue : Color.gray.opacity(0.8))
                         .cornerRadius(25)
                 }
                 .disabled(!viewModel.canProceedFromInterests())
-                
-                Button(action: {
-                    viewModel.skipToLogin()
-                }) {
-                    Text("Skip onboarding")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(25)
-                }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)

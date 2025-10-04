@@ -44,21 +44,7 @@ struct OnboardingFlowView: View {
             
             // Content based on current step
             switch viewModel.currentStep {
-            case .interests:
-                InterestSelectionView(viewModel: viewModel)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
-                
-            case .profile:
-                ProfileSetupView(viewModel: viewModel)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
-                
-            case .login:
+            case .phoneNumber:
                 LoginSignupView(viewModel: viewModel)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing),
@@ -67,6 +53,20 @@ struct OnboardingFlowView: View {
                 
             case .otpVerification:
                 OTPVerificationView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
+            case .interests:
+                InterestSelectionView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
+            case .decision:
+                DecisionView(viewModel: viewModel)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing),
                         removal: .move(edge: .leading)

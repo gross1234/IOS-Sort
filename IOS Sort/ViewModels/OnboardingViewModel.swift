@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor
 class OnboardingViewModel: ObservableObject {
-    @Published var currentStep: OnboardingStep = .interests
+    @Published var currentStep: OnboardingStep = .phoneNumber
     @Published var onboardingData = OnboardingData()
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -56,8 +56,8 @@ class OnboardingViewModel: ObservableObject {
         currentStep = previousStep
     }
     
-    func skipToLogin() {
-        currentStep = .login
+    func skipToMainApp() {
+        completeOnboarding()
     }
     
     private func completeOnboarding() {
@@ -93,7 +93,7 @@ class OnboardingViewModel: ObservableObject {
         return !profile.username.isEmpty
     }
     
-    // MARK: - Login
+    // MARK: - Phone Number
     
     func sendOTP() async {
         isLoading = true
@@ -108,7 +108,7 @@ class OnboardingViewModel: ObservableObject {
         nextStep()
     }
     
-    func canProceedFromLogin() -> Bool {
+    func canProceedFromPhone() -> Bool {
         return phoneNumber.count >= 10 // Basic phone number validation
     }
     
@@ -157,14 +157,14 @@ class OnboardingViewModel: ObservableObject {
     
     func validateCurrentStep() -> Bool {
         switch currentStep {
-        case .interests:
-            return canProceedFromInterests()
-        case .profile:
-            return canProceedFromProfile()
-        case .login:
-            return canProceedFromLogin()
+        case .phoneNumber:
+            return canProceedFromPhone()
         case .otpVerification:
             return otpCode.count == 4
+        case .interests:
+            return canProceedFromInterests()
+        case .decision:
+            return true // Always can proceed from decision
         case .completed:
             return true
         }

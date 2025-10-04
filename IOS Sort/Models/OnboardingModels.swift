@@ -63,22 +63,22 @@ struct UserProfile {
 // MARK: - Onboarding Steps
 
 enum OnboardingStep: Int, CaseIterable {
-    case interests = 0
-    case profile = 1
-    case login = 2
-    case otpVerification = 3
+    case phoneNumber = 0
+    case otpVerification = 1
+    case interests = 2
+    case decision = 3
     case completed = 4
     
     var title: String {
         switch self {
-        case .interests:
-            return "Choose Event Interests"
-        case .profile:
-            return "Set up your profile"
-        case .login:
+        case .phoneNumber:
             return "User Login / Sign up"
         case .otpVerification:
             return "OTP Verification"
+        case .interests:
+            return "Choose Event Interests"
+        case .decision:
+            return "Continue Setup?"
         case .completed:
             return "Welcome to Sort!"
         }
@@ -86,14 +86,14 @@ enum OnboardingStep: Int, CaseIterable {
     
     var subtitle: String {
         switch self {
-        case .interests:
-            return "takes 5 min"
-        case .profile:
-            return "Upload your profile picture below"
-        case .login:
+        case .phoneNumber:
             return "by continuing you agree to Sort's terms & conditions and privacy policy"
         case .otpVerification:
             return "Enter the OTP sent to your mobile number"
+        case .interests:
+            return "takes 5 min"
+        case .decision:
+            return "Would you like to complete your profile setup?"
         case .completed:
             return "You're all set!"
         }

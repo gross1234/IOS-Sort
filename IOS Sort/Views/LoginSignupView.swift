@@ -142,10 +142,10 @@ struct LoginSignupView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
-                    .background(viewModel.canProceedFromLogin() ? Color.blue : Color.gray)
+                    .background(viewModel.canProceedFromPhone() ? Color.blue : Color.gray)
                     .cornerRadius(12)
                 }
-                .disabled(!viewModel.canProceedFromLogin() || viewModel.isLoading)
+                .disabled(!viewModel.canProceedFromPhone() || viewModel.isLoading)
                 .padding(.horizontal, 20)
                 
                 // Error message

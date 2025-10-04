@@ -15,6 +15,9 @@ class OnboardingViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
+    // OTP Service
+    private let otpService = OTPService.shared
+    
     // Interest selection
     @Published var interests = EventInterest.allInterests
     
@@ -99,17 +102,32 @@ class OnboardingViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        // Simulate API call
+        // Validate phone number first
+        let validationResult = otpService.validatePhoneNumber(phoneNumber)
+        
+        if !validationResult.isValid {
+            isLoading = false
+            errorMessage = validationResult.message
+            return
+        }
+        
+        // Simulate API call delay
         try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
         
-        // In a real app, you would call your API here
-        // For demo purposes, we'll just proceed
+        // Generate real OTP
+        let generatedOTP = otpService.generateOTP(for: validationResult.cleanedNumber)
+        
         isLoading = false
+        
+        // In a real app, you would send this OTP via SMS/email
+        // For demo purposes, we'll show it in console and proceed
+        print("📱 OTP sent to \(phoneNumber): \(generatedOTP)")
+        
         nextStep()
     }
     
     func canProceedFromPhone() -> Bool {
-        return phoneNumber.count >= 10 // Basic phone number validation
+        return otpService.validatePhoneNumber(phoneNumber).isValid
     }
     
     // MARK: - OTP Verification
@@ -118,26 +136,29 @@ class OnboardingViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        // Simulate API call
-        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 second delay
+        // Simulate API call delay
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
         
-        // In a real app, you would verify the OTP with your backend
-        if otpCode == "1234" || otpCode.count == 4 { // Demo validation
-            isLoading = false
+        // Verify OTP using the service
+        let verificationResult = otpService.verifyOTP(otpCode)
+        
+        isLoading = false
+        
+        if verificationResult.isSuccess {
             nextStep()
         } else {
-            isLoading = false
-            errorMessage = "Invalid OTP. Please try again."
+            errorMessage = verificationResult.message
         }
     }
     
     func resendOTP() {
+        let newOTP = otpService.resendOTP()
         otpCode = ""
         otpTimer = 60
         canResendOTP = false
         startOTPTimer()
         
-        // In a real app, you would call your API to resend OTP
+        print("📱 New OTP sent to \(phoneNumber): \(newOTP)")
     }
     
     private func startOTPTimer() {

@@ -11,6 +11,7 @@ struct OTPVerificationView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     @State private var otpDigits: [String] = Array(repeating: "", count: 4)
     @FocusState private var focusedField: Int?
+    @State private var showingOTPCode = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,6 +30,15 @@ struct OTPVerificationView: View {
                 }
                 
                 Spacer()
+                
+                // Debug button to show OTP (remove in production)
+                Button(action: {
+                    showingOTPCode.toggle()
+                }) {
+                    Text("Show OTP")
+                        .font(.system(size: 12))
+                        .foregroundColor(.blue)
+                }
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
@@ -108,6 +118,23 @@ struct OTPVerificationView: View {
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
+                
+                // Debug OTP display (remove in production)
+                if showingOTPCode {
+                    VStack(spacing: 8) {
+                        Text("Debug Mode - OTP Code:")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.red)
+                        
+                        Text(OTPService.shared.currentOTP)
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.blue)
+                            .padding()
+                            .background(Color.blue.opacity(0.1))
+                            .cornerRadius(8)
+                    }
+                    .padding(.horizontal, 20)
+                }
                 
                 // OTP Input Fields
                 HStack(spacing: 12) {

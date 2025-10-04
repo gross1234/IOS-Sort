@@ -156,6 +156,14 @@ struct LoginSignupView: View {
                         .padding(.horizontal, 20)
                 }
                 
+                // Phone validation hint
+                if !viewModel.phoneNumber.isEmpty && !viewModel.canProceedFromPhone() {
+                    Text("Please enter a valid phone number (10-15 digits)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.orange)
+                        .padding(.horizontal, 20)
+                }
+                
                 Spacer()
             }
             .background(Color.white)

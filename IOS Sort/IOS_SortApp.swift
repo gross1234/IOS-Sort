@@ -11,7 +11,7 @@ import SwiftUI
 struct IOS_SortApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OnboardingCoordinatorView()
         }
     }
 }

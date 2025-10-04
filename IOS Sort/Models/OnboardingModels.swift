@@ -1,0 +1,101 @@
+//
+//  OnboardingModels.swift
+//  IOS Sort
+//
+//  Created by Gabe Ross on 10/4/25.
+//
+
+import Foundation
+
+// MARK: - Onboarding Flow Models
+
+struct OnboardingData {
+    var interests: [EventInterest] = []
+    var profile: UserProfile?
+    var phoneNumber: String = ""
+    var otpCode: String = ""
+    var isLoggedIn: Bool = false
+}
+
+struct EventInterest: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let icon: String
+    var isSelected: Bool = false
+    
+    static let allInterests = [
+        EventInterest(name: "Music", icon: "music.note"),
+        EventInterest(name: "Sports", icon: "sportscourt"),
+        EventInterest(name: "Food", icon: "fork.knife"),
+        EventInterest(name: "Art", icon: "paintbrush"),
+        EventInterest(name: "Technology", icon: "laptopcomputer"),
+        EventInterest(name: "Travel", icon: "airplane"),
+        EventInterest(name: "Fitness", icon: "figure.run"),
+        EventInterest(name: "Education", icon: "book"),
+        EventInterest(name: "Gaming", icon: "gamecontroller"),
+        EventInterest(name: "Photography", icon: "camera"),
+        EventInterest(name: "Fashion", icon: "tshirt"),
+        EventInterest(name: "Movies", icon: "tv"),
+        EventInterest(name: "Dancing", icon: "figure.dance"),
+        EventInterest(name: "Cooking", icon: "oven"),
+        EventInterest(name: "Reading", icon: "book.closed"),
+        EventInterest(name: "Nature", icon: "leaf")
+    ]
+}
+
+struct UserProfile {
+    var username: String = ""
+    var gender: Gender = .notSpecified
+    var dateOfBirth: Date?
+    var phone: String = ""
+    var property: String = ""
+    var religiousAssociation: String = ""
+    var profileImage: String? = nil
+    
+    enum Gender: String, CaseIterable {
+        case male = "Male"
+        case female = "Female"
+        case other = "Other"
+        case notSpecified = "Prefer not to say"
+    }
+}
+
+// MARK: - Onboarding Steps
+
+enum OnboardingStep: Int, CaseIterable {
+    case interests = 0
+    case profile = 1
+    case login = 2
+    case otpVerification = 3
+    case completed = 4
+    
+    var title: String {
+        switch self {
+        case .interests:
+            return "Choose Event Interests"
+        case .profile:
+            return "Set up your profile"
+        case .login:
+            return "User Login / Sign up"
+        case .otpVerification:
+            return "OTP Verification"
+        case .completed:
+            return "Welcome to Sort!"
+        }
+    }
+    
+    var subtitle: String {
+        switch self {
+        case .interests:
+            return "takes 5 min"
+        case .profile:
+            return "Upload your profile picture below"
+        case .login:
+            return "by continuing you agree to Sort's terms & conditions and privacy policy"
+        case .otpVerification:
+            return "Enter the OTP sent to your mobile number"
+        case .completed:
+            return "You're all set!"
+        }
+    }
+}

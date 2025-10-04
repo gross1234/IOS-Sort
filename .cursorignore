@@ -1,0 +1,117 @@
+# Cursor ignore file for iOS/Xcode projects
+# This file tells Cursor which files and directories to ignore for better performance
+
+# Xcode build artifacts
+build/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# User-specific Xcode settings
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Build products
+*.app
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+Packages/
+Package.pins
+Package.resolved
+
+# CocoaPods
+Pods/
+*.xcworkspace
+
+# Carthage
+Carthage/Build/
+Carthage/Checkouts/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.log
+*.bak
+*.backup
+
+# Large media files (uncomment if you have them)
+# *.mov
+# *.mp4
+# *.avi
+# *.wmv
+# *.flv
+# *.webm
+
+# Large image files (uncomment if you have them)
+# *.psd
+# *.ai
+# *.sketch
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# Python cache (if using any Python tools)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Backup files
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+
+# Test coverage
+*.gcov
+*.gcda
+*.gcno
+coverage/
+
+# Profiling data
+*.prof
+*.trace

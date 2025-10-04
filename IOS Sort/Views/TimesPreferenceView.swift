@@ -9,15 +9,13 @@ import SwiftUI
 
 struct TimesPreferenceView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var timePreferences: [String: ClosedRange<Double>] = [
-        "Monday": 9...23,
-        "Tuesday": 9...23,
-        "Wednesday": 9...23,
-        "Thursday": 9...23,
-        "Friday": 9...23,
-        "Saturday": 9...23,
-        "Sunday": 9...23
-    ]
+    @State private var mondayRange: ClosedRange<Double> = 9...23
+    @State private var tuesdayRange: ClosedRange<Double> = 9...23
+    @State private var wednesdayRange: ClosedRange<Double> = 9...23
+    @State private var thursdayRange: ClosedRange<Double> = 9...23
+    @State private var fridayRange: ClosedRange<Double> = 9...23
+    @State private var saturdayRange: ClosedRange<Double> = 9...23
+    @State private var sundayRange: ClosedRange<Double> = 9...23
     
     private let timeLabels = ["7AM", "10AM", "12PM", "4PM", "7PM", "11PM"]
     private let timeValues: [Double] = [7, 10, 12, 16, 19, 23]
@@ -60,14 +58,13 @@ struct TimesPreferenceView: View {
             // Days with time sliders
             ScrollView {
                 VStack(spacing: 24) {
-                    ForEach(Array(timePreferences.keys.sorted()), id: \.self) { day in
-                        TimeSliderView(
-                            day: day,
-                            range: $timePreferences[day] ?? 9...23,
-                            timeLabels: timeLabels,
-                            timeValues: timeValues
-                        )
-                    }
+                    TimeSliderView(day: "Monday", range: $mondayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Tuesday", range: $tuesdayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Wednesday", range: $wednesdayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Thursday", range: $thursdayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Friday", range: $fridayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Saturday", range: $saturdayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    TimeSliderView(day: "Sunday", range: $sundayRange, timeLabels: timeLabels, timeValues: timeValues)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 100) // Space for continue button

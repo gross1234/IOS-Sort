@@ -9,14 +9,12 @@ import SwiftUI
 
 struct CategoriesSelectionView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var categoryPreferences: [String: ClosedRange<Double>] = [
-        "Trainers": -3...3,
-        "Activities": -3...3,
-        "Community events": -3...3,
-        "Socializing": -3...3,
-        "Thrill seeking": -3...3,
-        "Church": -3...3
-    ]
+    @State private var trainersRange: ClosedRange<Double> = -3...3
+    @State private var activitiesRange: ClosedRange<Double> = -3...3
+    @State private var communityEventsRange: ClosedRange<Double> = -3...3
+    @State private var socializingRange: ClosedRange<Double> = -3...3
+    @State private var thrillSeekingRange: ClosedRange<Double> = -3...3
+    @State private var churchRange: ClosedRange<Double> = -3...3
     
     var body: some View {
         VStack(spacing: 0) {
@@ -56,12 +54,12 @@ struct CategoriesSelectionView: View {
             // Categories with sliders
             ScrollView {
                 VStack(spacing: 24) {
-                    ForEach(Array(categoryPreferences.keys.sorted()), id: \.self) { category in
-                        CategorySliderView(
-                            title: category,
-                            range: $categoryPreferences[category] ?? -3...3
-                        )
-                    }
+                    CategorySliderView(title: "Trainers", range: $trainersRange)
+                    CategorySliderView(title: "Activities", range: $activitiesRange)
+                    CategorySliderView(title: "Community events", range: $communityEventsRange)
+                    CategorySliderView(title: "Socializing", range: $socializingRange)
+                    CategorySliderView(title: "Thrill seeking", range: $thrillSeekingRange)
+                    CategorySliderView(title: "Church", range: $churchRange)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 100) // Space for continue button

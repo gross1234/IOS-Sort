@@ -143,7 +143,7 @@ struct OTPVerificationView: View {
                             .textFieldStyle(OTPTextFieldStyle())
                             .keyboardType(.numberPad)
                             .focused($focusedField, equals: index)
-                            .onChange(of: otpDigits[index]) { newValue in
+                            .onChange(of: otpDigits[index]) { _, newValue in
                                 // Limit to single digit
                                 if newValue.count > 1 {
                                     otpDigits[index] = String(newValue.prefix(1))
@@ -157,7 +157,7 @@ struct OTPVerificationView: View {
                                 // Update view model
                                 viewModel.otpCode = otpDigits.joined()
                             }
-                            .onChange(of: focusedField) { newValue in
+                            .onChange(of: focusedField) { _, newValue in
                                 if newValue == index && otpDigits[index].isEmpty {
                                     // Clear field when focused
                                 }

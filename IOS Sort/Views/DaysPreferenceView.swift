@@ -134,6 +134,11 @@ struct SingleSlider: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let boundsWidth = bounds.upperBound - bounds.lowerBound
+            let valueOffset = value - bounds.lowerBound
+            let thumbPosition = valueOffset * geometry.size.width / boundsWidth
+            let activeWidth = valueOffset * geometry.size.width / boundsWidth
+            
             ZStack(alignment: .leading) {
                 // Track
                 Rectangle()
@@ -146,7 +151,7 @@ struct SingleSlider: View {
                     .fill(Color.blue)
                     .frame(height: 4)
                     .cornerRadius(2)
-                    .frame(width: (value - bounds.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound))
+                    .frame(width: activeWidth)
                 
                 // Thumb
                 Circle()
@@ -156,11 +161,11 @@ struct SingleSlider: View {
                         Circle()
                             .stroke(Color.blue, lineWidth: 2)
                     )
-                    .offset(x: (value - bounds.lowerBound) * geometry.size.width / (bounds.upperBound - bounds.lowerBound) - 10)
+                    .offset(x: thumbPosition - 10)
                     .gesture(
                         DragGesture()
                             .onChanged { dragValue in
-                                let newValue = bounds.lowerBound + (dragValue.location.x / geometry.size.width) * (bounds.upperBound - bounds.lowerBound)
+                                let newValue = bounds.lowerBound + (dragValue.location.x / geometry.size.width) * boundsWidth
                                 let clampedValue = max(bounds.lowerBound, min(newValue, bounds.upperBound))
                                 value = clampedValue
                             }

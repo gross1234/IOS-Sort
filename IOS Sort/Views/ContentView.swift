@@ -25,6 +25,17 @@ struct ContentView: View {
                 }
                 .padding(.top)
                 
+                // Debug reset button (remove in production)
+                Button("Reset Onboarding") {
+                    UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
+                    // Force app restart by exiting
+                    exit(0)
+                }
+                .padding()
+                .background(Color.red.opacity(0.1))
+                .cornerRadius(8)
+                .foregroundColor(.red)
+                
                 // Algorithm Selection
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Algorithm")

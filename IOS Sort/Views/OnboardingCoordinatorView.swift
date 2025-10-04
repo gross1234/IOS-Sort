@@ -19,17 +19,38 @@ struct OnboardingCoordinatorView: View {
                         checkOnboardingStatus()
                     }
             } else {
-                // Main app content
-                ContentView()
+                // Main app content with reset option
+                VStack {
+                    ContentView()
+                    
+                    // Debug reset button (remove in production)
+                    Button("Reset Onboarding") {
+                        resetOnboarding()
+                    }
+                    .padding()
+                    .background(Color.red.opacity(0.1))
+                    .cornerRadius(8)
+                    .padding()
+                }
             }
         }
     }
     
     private func checkOnboardingStatus() {
-        let hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
-        if hasCompletedOnboarding {
-            showingOnboarding = false
-        }
+        // For development, always show onboarding
+        // Comment out the next line to enable persistent onboarding
+        showingOnboarding = true
+        
+        // Uncomment these lines for production behavior:
+        // let hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
+        // if hasCompletedOnboarding {
+        //     showingOnboarding = false
+        // }
+    }
+    
+    private func resetOnboarding() {
+        UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
+        showingOnboarding = true
     }
 }
 

@@ -100,7 +100,7 @@ struct OrganizationsFollowView: View {
                             .foregroundColor(.black)
                         
                         ForEach(contactsOrganizations, id: \.id) { organization in
-                            OrganizationCard(
+                            OrganizationFollowCard(
                                 organization: organization,
                                 isFollowed: followedOrganizations.contains(organization.id),
                                 onFollowToggle: {
@@ -134,7 +134,7 @@ struct OrganizationsFollowView: View {
                             .foregroundColor(.black)
                         
                         ForEach(suggestedOrganizations, id: \.id) { organization in
-                            OrganizationCard(
+                            OrganizationFollowCard(
                                 organization: organization,
                                 isFollowed: followedOrganizations.contains(organization.id),
                                 onFollowToggle: {
@@ -187,7 +187,7 @@ struct Organization {
     let isFromContacts: Bool
 }
 
-struct OrganizationCard: View {
+struct OrganizationFollowCard: View {
     let organization: Organization
     let isFollowed: Bool
     let onFollowToggle: () -> Void

@@ -176,26 +176,28 @@ class OnboardingViewModel: ObservableObject {
     
     // MARK: - Validation
     
-    func validateCurrentStep() -> Bool {
-        switch currentStep {
-        case .phoneNumber:
-            return canProceedFromPhone()
-        case .otpVerification:
-            return otpCode.count == 4
-        case .profile:
-            return canProceedFromProfile()
-        case .decision:
-            return true // Always can proceed from decision
-        case .categories:
-            return true // Always can proceed from categories
-        case .days:
-            return true // Always can proceed from days
-        case .times:
-            return true // Always can proceed from times
-        case .interests:
-            return true // Always can proceed from interests
-        case .completed:
-            return true
+        func validateCurrentStep() -> Bool {
+            switch currentStep {
+            case .phoneNumber:
+                return canProceedFromPhone()
+            case .otpVerification:
+                return otpCode.count == 4
+            case .profile:
+                return canProceedFromProfile()
+            case .decision:
+                return true // Always can proceed from decision
+            case .categories:
+                return true // Always can proceed from categories
+            case .days:
+                return true // Always can proceed from days
+            case .times:
+                return true // Always can proceed from times
+            case .interests:
+                return true // Always can proceed from interests
+            case .organizations:
+                return true // Always can proceed from organizations
+            case .completed:
+                return true
+            }
         }
-    }
 }

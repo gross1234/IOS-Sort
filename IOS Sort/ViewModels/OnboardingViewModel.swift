@@ -186,6 +186,14 @@ class OnboardingViewModel: ObservableObject {
             return canProceedFromProfile()
         case .decision:
             return true // Always can proceed from decision
+        case .categories:
+            return true // Always can proceed from categories
+        case .days:
+            return true // Always can proceed from days
+        case .times:
+            return true // Always can proceed from times
+        case .interests:
+            return true // Always can proceed from interests
         case .completed:
             return true
         }

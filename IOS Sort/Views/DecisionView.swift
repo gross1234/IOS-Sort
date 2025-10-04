@@ -66,7 +66,7 @@ struct DecisionView: View {
             // Action Buttons
             VStack(spacing: 16) {
                 Button(action: {
-                    // Go to profile setup (we'll add this later)
+                    // Go to categories screen
                     viewModel.nextStep()
                 }) {
                     Text("Complete Profile Setup")

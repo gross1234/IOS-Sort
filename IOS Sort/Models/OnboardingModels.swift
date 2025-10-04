@@ -67,7 +67,11 @@ enum OnboardingStep: Int, CaseIterable {
     case otpVerification = 1
     case profile = 2
     case decision = 3
-    case completed = 4
+    case categories = 4
+    case days = 5
+    case times = 6
+    case interests = 7
+    case completed = 8
     
     var title: String {
         switch self {
@@ -79,6 +83,14 @@ enum OnboardingStep: Int, CaseIterable {
             return "Set up your profile"
         case .decision:
             return "Continue Setup?"
+        case .categories:
+            return "Choose Categories!"
+        case .days:
+            return "What days work best"
+        case .times:
+            return "What times work best"
+        case .interests:
+            return "Choose interests!"
         case .completed:
             return "Welcome to Sort!"
         }
@@ -94,6 +106,14 @@ enum OnboardingStep: Int, CaseIterable {
             return "Upload your profile picture below"
         case .decision:
             return "Would you like to complete your profile setup?"
+        case .categories:
+            return "Personalize your feed to see more events love and less of what you don't."
+        case .days:
+            return "Personalize your feed to see more events you love and less of what you don't."
+        case .times:
+            return "Personalize your feed to see more events you love and less of what you don't."
+        case .interests:
+            return "Choose specific interests for future registrations"
         case .completed:
             return "You're all set!"
         }

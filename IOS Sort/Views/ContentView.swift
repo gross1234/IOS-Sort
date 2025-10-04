@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = SortViewModel()
-    
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Header
-                VStack {
-                    Text("Sorting Algorithms")
+            VStack(spacing: 40) {
+                Spacer()
+                
+                // Welcome content
+                VStack(spacing: 20) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 80))
+                        .foregroundColor(.green)
+                    
+                    Text("Welcome to Sort!")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
-                    Text("Visualize different sorting algorithms")
-                        .font(.subheadline)
+                    Text("You're all set up and ready to discover amazing events!")
+                        .font(.body)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
                 }
-                .padding(.top)
+                
+                Spacer()
                 
                 // Debug reset button (remove in production)
                 Button("Reset Onboarding") {
@@ -35,71 +42,9 @@ struct ContentView: View {
                 .background(Color.red.opacity(0.1))
                 .cornerRadius(8)
                 .foregroundColor(.red)
-                
-                // Algorithm Selection
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Algorithm")
-                        .font(.headline)
-                    
-                    Picker("Sort Algorithm", selection: $viewModel.sortAlgorithm) {
-                        ForEach(SortViewModel.SortAlgorithm.allCases, id: \.self) { algorithm in
-                            Text(algorithm.rawValue).tag(algorithm)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                }
-                .padding(.horizontal)
-                
-                // Controls
-                HStack(spacing: 16) {
-                    Button("Generate Numbers") {
-                        viewModel.generateRandomNumbers()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(viewModel.isSorting)
-                    
-                    Button(viewModel.isSorting ? "Sorting..." : "Sort") {
-                        Task {
-                            await viewModel.sortNumbers()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(viewModel.isSorting || viewModel.numbers.isEmpty)
-                }
-                .padding(.horizontal)
-                
-                // Visualization
-                if !viewModel.numbers.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Array Visualization")
-                            .font(.headline)
-                            .padding(.horizontal)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(alignment: .bottom, spacing: 4) {
-                                ForEach(Array(viewModel.numbers.enumerated()), id: \.offset) { index, number in
-                                    Rectangle()
-                                        .fill(Color.blue.opacity(0.7))
-                                        .frame(width: 20, height: CGFloat(number) * 3)
-                                        .overlay(
-                                            Text("\(number)")
-                                                .font(.caption2)
-                                                .foregroundColor(.white)
-                                        )
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
-                        .frame(height: 200)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                    }
-                }
-                
-                Spacer()
+                .padding(.bottom, 40)
             }
-            .navigationTitle("IOS Sort")
+            .navigationTitle("Sort")
             .navigationBarTitleDisplayMode(.inline)
         }
     }

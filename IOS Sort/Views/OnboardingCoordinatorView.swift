@@ -93,6 +93,34 @@ struct OnboardingFlowView: View {
                         removal: .move(edge: .leading)
                     ))
                 
+            case .categories:
+                CategoriesSelectionView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
+            case .days:
+                DaysPreferenceView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
+            case .times:
+                TimesPreferenceView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
+            case .interests:
+                InterestsSelectionView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
             case .completed:
                 OnboardingCompleteView(viewModel: viewModel)
                     .transition(.scale.combined(with: .opacity))

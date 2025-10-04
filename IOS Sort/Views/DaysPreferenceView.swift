@@ -13,15 +13,7 @@ struct DaysPreferenceView: View {
     
     init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
-        self._dayPreferences = State(initialValue: [
-            "Mondays": -7,
-            "Tuesday": -7,
-            "Wednesday": -7,
-            "Thursday": -7,
-            "Fridays": -7,
-            "Saturdays": -7,
-            "Sundays": -7
-        ])
+        self._dayPreferences = State(initialValue: [:])
     }
     
     var body: some View {
@@ -72,6 +64,9 @@ struct DaysPreferenceView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 100) // Space for continue button
             }
+            .onAppear {
+                initializeDayPreferences()
+            }
             
             // Continue button
             VStack {
@@ -92,6 +87,16 @@ struct DaysPreferenceView: View {
             .background(Color.white)
         }
         .background(Color.white)
+    }
+    
+    private func initializeDayPreferences() {
+        dayPreferences["Mondays"] = -7
+        dayPreferences["Tuesday"] = -7
+        dayPreferences["Wednesday"] = -7
+        dayPreferences["Thursday"] = -7
+        dayPreferences["Fridays"] = -7
+        dayPreferences["Saturdays"] = -7
+        dayPreferences["Sundays"] = -7
     }
 }
 

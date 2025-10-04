@@ -165,6 +165,8 @@ class OnboardingViewModel: ObservableObject {
             return canProceedFromInterests()
         case .decision:
             return true // Always can proceed from decision
+        case .profile:
+            return canProceedFromProfile()
         case .completed:
             return true
         }

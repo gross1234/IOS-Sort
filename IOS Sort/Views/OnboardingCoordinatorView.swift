@@ -72,6 +72,13 @@ struct OnboardingFlowView: View {
                         removal: .move(edge: .leading)
                     ))
                 
+            case .profile:
+                ProfileSetupView(viewModel: viewModel)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)
+                    ))
+                
             case .completed:
                 OnboardingCompleteView(viewModel: viewModel)
                     .transition(.scale.combined(with: .opacity))

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct DaysPreferenceView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var mondayValue: Double = -7
-    @State private var tuesdayValue: Double = -7
-    @State private var wednesdayValue: Double = -7
-    @State private var thursdayValue: Double = -7
-    @State private var fridayValue: Double = -7
-    @State private var saturdayValue: Double = -7
-    @State private var sundayValue: Double = -7
+    @State private var mondayValue: Double = 0
+    @State private var tuesdayValue: Double = 0
+    @State private var wednesdayValue: Double = 0
+    @State private var thursdayValue: Double = 0
+    @State private var fridayValue: Double = 0
+    @State private var saturdayValue: Double = 0
+    @State private var sundayValue: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {

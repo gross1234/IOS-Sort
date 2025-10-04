@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TimesPreferenceView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var mondayRange: ClosedRange<Double> = 9...23
-    @State private var tuesdayRange: ClosedRange<Double> = 9...23
-    @State private var wednesdayRange: ClosedRange<Double> = 9...23
-    @State private var thursdayRange: ClosedRange<Double> = 9...23
-    @State private var fridayRange: ClosedRange<Double> = 9...23
-    @State private var saturdayRange: ClosedRange<Double> = 9...23
-    @State private var sundayRange: ClosedRange<Double> = 9...23
+    @State private var mondayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var tuesdayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var wednesdayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var thursdayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var fridayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var saturdayRanges: [ClosedRange<Double>] = [9...17]
+    @State private var sundayRanges: [ClosedRange<Double>] = [9...17]
     
     private let timeLabels = ["7AM", "10AM", "12PM", "4PM", "7PM", "11PM"]
     private let timeValues: [Double] = [7, 10, 12, 16, 19, 23]
@@ -58,13 +58,13 @@ struct TimesPreferenceView: View {
             // Days with time sliders
             ScrollView {
                 VStack(spacing: 24) {
-                    TimeSliderView(day: "Monday", range: $mondayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Tuesday", range: $tuesdayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Wednesday", range: $wednesdayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Thursday", range: $thursdayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Friday", range: $fridayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Saturday", range: $saturdayRange, timeLabels: timeLabels, timeValues: timeValues)
-                    TimeSliderView(day: "Sunday", range: $sundayRange, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Monday", ranges: $mondayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Tuesday", ranges: $tuesdayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Wednesday", ranges: $wednesdayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Thursday", ranges: $thursdayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Friday", ranges: $fridayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Saturday", ranges: $saturdayRanges, timeLabels: timeLabels, timeValues: timeValues)
+                    DayTimeGroupView(day: "Sunday", ranges: $sundayRanges, timeLabels: timeLabels, timeValues: timeValues)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 100) // Space for continue button
@@ -89,6 +89,76 @@ struct TimesPreferenceView: View {
             .background(Color.white)
         }
         .background(Color.white)
+    }
+}
+
+struct DayTimeGroupView: View {
+    let day: String
+    @Binding var ranges: [ClosedRange<Double>]
+    let timeLabels: [String]
+    let timeValues: [Double]
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            // Day name with minus button
+            HStack {
+                Text(day)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.black)
+                
+                Spacer()
+                
+                Button(action: {
+                    if ranges.count > 1 {
+                        ranges.removeLast()
+                    }
+                }) {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.red)
+                }
+                .disabled(ranges.count <= 1)
+            }
+            
+            // Time range sliders
+            ForEach(Array(ranges.enumerated()), id: \.offset) { index, range in
+                VStack(spacing: 8) {
+                    TimeRangeSlider(
+                        range: $ranges[index],
+                        bounds: 7...23,
+                        step: 1,
+                        timeLabels: timeLabels,
+                        timeValues: timeValues
+                    )
+                    
+                    // Time labels
+                    HStack {
+                        ForEach(Array(zip(timeLabels, timeValues)), id: \.1) { label, value in
+                            Text(label)
+                                .font(.system(size: 10))
+                                .foregroundColor(.gray)
+                            
+                            if value != timeValues.last {
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Plus button to add more time ranges
+            Button(action: {
+                ranges.append(9...17)
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 16))
+                    Text("Add more times")
+                        .font(.system(size: 14, weight: .medium))
+                }
+                .foregroundColor(.blue)
+            }
+        }
     }
 }
 

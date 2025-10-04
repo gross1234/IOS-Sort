@@ -9,12 +9,12 @@ import SwiftUI
 
 struct CategoriesSelectionView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var trainersRange: ClosedRange<Double> = -3...3
-    @State private var activitiesRange: ClosedRange<Double> = -3...3
-    @State private var communityEventsRange: ClosedRange<Double> = -3...3
-    @State private var socializingRange: ClosedRange<Double> = -3...3
-    @State private var thrillSeekingRange: ClosedRange<Double> = -3...3
-    @State private var churchRange: ClosedRange<Double> = -3...3
+    @State private var trainersRange: ClosedRange<Double> = 0...0
+    @State private var activitiesRange: ClosedRange<Double> = 0...0
+    @State private var communityEventsRange: ClosedRange<Double> = 0...0
+    @State private var socializingRange: ClosedRange<Double> = 0...0
+    @State private var thrillSeekingRange: ClosedRange<Double> = 0...0
+    @State private var churchRange: ClosedRange<Double> = 0...0
     
     var body: some View {
         VStack(spacing: 0) {

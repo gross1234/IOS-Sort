@@ -71,8 +71,9 @@ enum OnboardingStep: Int, CaseIterable {
     case days = 5
     case times = 6
     case interests = 7
-    case organizations = 8
-    case completed = 9
+    case findFriends = 8
+    case organizations = 9
+    case completed = 10
 
     var title: String {
         switch self {
@@ -92,6 +93,8 @@ enum OnboardingStep: Int, CaseIterable {
             return "What times work best"
         case .interests:
             return "Choose interests!"
+        case .findFriends:
+            return "Find my friends"
         case .organizations:
             return "Follow Organizations"
         case .completed:
@@ -117,6 +120,8 @@ enum OnboardingStep: Int, CaseIterable {
             return "Personalize your feed to see more events you love and less of what you don't."
         case .interests:
             return "Choose specific interests for future registrations"
+        case .findFriends:
+            return "Connect with friends who are already on Sort"
         case .organizations:
             return "Follow organizations to get access to new events, friends registrations, and reviews & photos"
         case .completed:

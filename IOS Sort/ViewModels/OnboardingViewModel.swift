@@ -194,6 +194,8 @@ class OnboardingViewModel: ObservableObject {
                 return true // Always can proceed from times
             case .interests:
                 return true // Always can proceed from interests
+            case .findFriends:
+                return true // Always can proceed from findFriends
             case .organizations:
                 return true // Always can proceed from organizations
             case .completed:

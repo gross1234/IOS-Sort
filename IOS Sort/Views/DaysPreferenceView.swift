@@ -9,12 +9,13 @@ import SwiftUI
 
 struct DaysPreferenceView: View {
     @ObservedObject var viewModel: OnboardingViewModel
-    @State private var dayPreferences: [String: Double] = [:]
-    
-    init(viewModel: OnboardingViewModel) {
-        self.viewModel = viewModel
-        self._dayPreferences = State(initialValue: [:])
-    }
+    @State private var mondayValue: Double = -7
+    @State private var tuesdayValue: Double = -7
+    @State private var wednesdayValue: Double = -7
+    @State private var thursdayValue: Double = -7
+    @State private var fridayValue: Double = -7
+    @State private var saturdayValue: Double = -7
+    @State private var sundayValue: Double = -7
     
     var body: some View {
         VStack(spacing: 0) {
@@ -54,18 +55,16 @@ struct DaysPreferenceView: View {
             // Days with sliders
             ScrollView {
                 VStack(spacing: 24) {
-                    ForEach(Array(dayPreferences.keys.sorted()), id: \.self) { day in
-                        DaySliderView(
-                            day: day,
-                            value: $dayPreferences[day] ?? -7
-                        )
-                    }
+                    DaySliderView(day: "Mondays", value: $mondayValue)
+                    DaySliderView(day: "Tuesday", value: $tuesdayValue)
+                    DaySliderView(day: "Wednesday", value: $wednesdayValue)
+                    DaySliderView(day: "Thursday", value: $thursdayValue)
+                    DaySliderView(day: "Fridays", value: $fridayValue)
+                    DaySliderView(day: "Saturdays", value: $saturdayValue)
+                    DaySliderView(day: "Sundays", value: $sundayValue)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 100) // Space for continue button
-            }
-            .onAppear {
-                initializeDayPreferences()
             }
             
             // Continue button
@@ -87,16 +86,6 @@ struct DaysPreferenceView: View {
             .background(Color.white)
         }
         .background(Color.white)
-    }
-    
-    private func initializeDayPreferences() {
-        dayPreferences["Mondays"] = -7
-        dayPreferences["Tuesday"] = -7
-        dayPreferences["Wednesday"] = -7
-        dayPreferences["Thursday"] = -7
-        dayPreferences["Fridays"] = -7
-        dayPreferences["Saturdays"] = -7
-        dayPreferences["Sundays"] = -7
     }
 }
 
